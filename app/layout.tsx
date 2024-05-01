@@ -1,10 +1,17 @@
+
 import type { Metadata } from "next";
 
 // import { Inter } from "next/font/google";
 import { Jura } from "next/font/google";
+<<<<<<< HEAD
 
 import "./globals.css";
  
+=======
+import { ClerkProvider } from '@clerk/nextjs'
+import "./globals.css";
+import { NotificationProvider } from "@/contexts/NotificatonContext";
+>>>>>>> 5becf6c (Test changes for Social Page)
 
 // const inter = Inter({ subsets: ["latin"] });
 
@@ -27,10 +34,22 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
+<<<<<<< HEAD
     <html lang='en'>
       <body className={jura_init.variable}>{children}</body>
 
     </html>
+=======
+
+    <ClerkProvider>
+      <NotificationProvider>
+        <html lang='en'>
+          <body className={jura_init.variable}>{children}</body>
+        </html>
+      </NotificationProvider>
+    </ClerkProvider>
+
+>>>>>>> 5becf6c (Test changes for Social Page)
   );
 }
 

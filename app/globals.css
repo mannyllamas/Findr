@@ -98,3 +98,109 @@ dark:text-gray-400 dark:hover:bg-gray-800 dark:focus:ring-gray-900
 .logo_style{
   @apply jura text-blue-600 dark:text-gray-200 relative flex place-items-center text-9xl
 }
+<<<<<<< HEAD
+=======
+.profile-card {
+  width: 450px; /* Custom width */
+  height: 400px; /* Custom height */
+}
+
+/* TopBar style */
+.search-bar {
+  @apply w-full bg-gray-700 py-1 px-10 rounded-lg focus:outline-none text-gray-200 text-lg font-semibold
+}
+.search-icon {
+  @apply absolute top-6 right-2 text-gray-200 cursor-pointer hover:text-blue-400
+}
+
+/* File upload styling for /AddProfil */
+.file-input {
+  opacity: 0;
+  width: 0.1px;
+  height: 0.1px;
+  position: absolute;
+  z-index: -1;
+}
+.custom-file-upload {
+  @apply text-gray-200 text-center hover:text-white font-semibold px-4 py-2 border rounded-lg cursor-pointer 
+   hover:bg-gray-700 transition duration-150 ease-in-out 
+   bg-gray-600 border-none 
+}
+.online-indicator {
+  height: 10px;
+  width: 10px;
+  background-color: #d209f1; /* Green color */
+  border-radius: 50%;
+  display: inline-block;
+}
+
+/* For SocialRightSideComp, Customizes the scrollbar for WebKit browsers (Chrome, Safari, etc.) */
+.scroll_bar::-webkit-scrollbar {
+  width: 7px; /* Width of the scrollbar */
+}
+
+.scroll_bar::-webkit-scrollbar-track {
+  @apply bg-gray-300 rounded-lg/*Color of the track */
+   
+}
+
+.scroll_bar::-webkit-scrollbar-thumb {
+  @apply bg-gray-700 /* Color of the scrollbar thumb */
+  rounded-lg /* Optional: adds rounded corners to the scrollbar thumb */
+}
+
+.scroll_bar::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Color of the scrollbar thumb on hover */
+}
+
+/* Profile click pop-up animation */
+@keyframes fadeInScaleUp {
+  0% {
+    opacity: 0;
+    /* A number less than 1 makes a coming out animation anything greater than 1 is coming in animation */
+    transform: scale(0.50); 
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.fadeInScaleUp {
+  animation: fadeInScaleUp 0.3s ease-out forwards;
+}
+
+.notification-popup {
+  color: black;
+  position: fixed; /* or absolute */
+  top: 10%; /* adjust as necessary */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: white; /* ensure it contrasts with the background */
+  border: 1px solid black; /* make it visible */
+  z-index: 1000; /* ensure it's on top */
+  padding: 20px;
+  width: 400px; /* adjust as necessary */
+  height: 400px;
+}
+/* Add to your global CSS file or within a <style> tag in your React component */
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%); /* Start from below the visible area */
+  }
+  to {
+    transform: translateY(0); /* End at the natural position */
+  }
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(0); /* Start from the natural position */
+  }
+  to {
+    transform: translateY(100%); /* End below the visible area */
+  }
+}
+
+
+>>>>>>> 5becf6c (Test changes for Social Page)

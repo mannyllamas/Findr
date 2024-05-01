@@ -31,9 +31,26 @@ export default function Home() {
           </p>
         </Link>
 
+<<<<<<< HEAD
         <Link href="/CompanyPage" className="hidden lg:block px-10 text-center">
           <h2 className="mb-3 text-2xl font-semibold hover:text-gray-500">Meet the Team</h2>
           <p className="m-0 max-w-[30ch] text-sm opacity-50 text-gray-600">
+=======
+        <Link href="/sign-up" className="hidden lg:block px-100 lg:px-100 text-center">
+          <h2 className={`mb-3 text-2xl font-semibold hover:text-gray-400`}>
+            Intern Sign Up{" "}
+          </h2>
+          <p className={`m-0 max-w-[30ch] text-sm opacity-50 text-gray-600`}>
+            Interns, sign up here to begin your perfect intern experience.
+          </p>
+        </Link>
+
+        <Link href="/CompanyPage" className="hidden lg:block px-100 lg:px-100 text-center">
+          <h2 className={`mb-3 text-2xl font-semibold hover:text-gray-400`}>
+            Meet the Team{" "}
+          </h2>
+          <p className={`m-0 max-w-[30ch] text-sm opacity-50 text-gray-600`}>
+>>>>>>> 5becf6c (Test changes for Social Page)
             Meet the team behind Findr.
           </p>
         </Link>
