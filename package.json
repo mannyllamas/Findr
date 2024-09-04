@@ -25,15 +25,23 @@
     "@tailwindcss/forms": "^0.5.7",
     "@types/react-router-dom": "^5.3.3",
 <<<<<<< HEAD
+<<<<<<< HEAD
     "axios": "^1.6.8",
 =======
     "aws-sdk": "^2.1584.0",
+=======
+    "aws-sdk": "^2.1679.0",
+>>>>>>> 15644cb (Your commit message)
     "browser-image-compression": "^2.0.2",
     "date-fns": "^3.6.0",
 >>>>>>> 5becf6c (Test changes for Social Page)
     "flowbite": "^2.2.1",
     "flowbite-react": "^0.7.2",
+<<<<<<< HEAD
     "next": "14.1.0",
+=======
+    "next": "^14.2.5",
+>>>>>>> 15644cb (Your commit message)
     "react": "^18",
     "react-dom": "^18",
 <<<<<<< HEAD
@@ -45,6 +53,7 @@
 >>>>>>> 5becf6c (Test changes for Social Page)
   },
   "devDependencies": {
+    "@types/aws-sdk": "^2.7.0",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

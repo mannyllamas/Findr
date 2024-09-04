@@ -11,6 +11,7 @@ import { profile } from 'console';
 import imageCompression, { Options } from 'browser-image-compression';
 
 interface Profile {
+    userId: string;
     name: string;
     email: string;
     role: string;
@@ -27,8 +28,9 @@ interface Profile {
 }
 
 export default function AddProfile() {
-    const { isLoaded, isSignedIn, user } = useUser(); // Testing to create profile when signing up with Clerk
+    const { isLoaded, isSignedIn, user } = useUser(); // Clerk user object
     const [newProfile, setNewProfile] = useState<Profile>({
+        userId: '',  // Initialize userId
         name: '',
         email: '',
         role: '',
@@ -38,10 +40,9 @@ export default function AddProfile() {
         isOnline: false,
         interests: [],
         introduction: '',
-        backgroundImageUrl: '',
         school: '',
         major: '',
-        gender: '', // Make sure all fields are initialized, even if with empty strings or appropriate default values.
+        gender: '',
     });
 
     const [submissionMessage, setSubmissionMessage] = useState<string>('');
@@ -70,21 +71,18 @@ export default function AddProfile() {
 
     useEffect(() => {
         if (user) {
-
             setNewProfile(prevState => ({
                 ...prevState,
+                userId: user.id,  // Set userId from Clerk
                 name: `${user.firstName || ''} ${user.lastName || ''}`.trim() || prevState.name,
                 email: user.primaryEmailAddress?.emailAddress || prevState.email,
-                // Only update imageUrl and other fields if they haven't been set by the user.
                 imageUrl: prevState.imageUrl || `${user.imageUrl}?timestamp=${new Date().getTime()}`,
-                // Assume role and other fields are user-controlled and don't overwrite them here.
                 role: prevState.role,
                 lastSeen: prevState.lastSeen,
                 lastSeenDateTime: prevState.lastSeenDateTime,
                 isOnline: prevState.isOnline,
                 interests: prevState.interests,
                 introduction: prevState.introduction,
-                backgroundImageUrl: prevState.backgroundImageUrl,
                 school: prevState.school,
                 major: prevState.major,
                 gender: prevState.gender,
@@ -132,28 +130,65 @@ export default function AddProfile() {
         }));
     };
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
         event.preventDefault();
-        const profiles = JSON.parse(localStorage.getItem('profiles') || '[]');
-        const profileIndex = profiles.findIndex((p: Profile) => p.email === newProfile.email);
 
-        const profileToSave = { ...newProfile, backgroundImageUrl }; // Explicitly set backgroundImageUrl
+        const profileToSave: Profile = {
+            ...newProfile,
+            userId: newProfile.userId,  // Ensure userId is included
+            backgroundImageUrl,  // Ensure backgroundImageUrl is included only if you're using it
+        };
 
-        if (profileIndex !== -1) {
-            // Profile exists - Update the existing profile
-            profiles[profileIndex] = profileToSave;
-            setSubmissionMessageType('success');
-            setSubmissionMessage('Profile updated successfully!');
-        } else {
-            // New profile - Add it
-            profiles.push(profileToSave);
-            setSubmissionMessageType('success');
-            setSubmissionMessage('Profile added successfully!');
+        // Log the profile data to check that all required fields are populated
+        console.log('Submitting Profile:', profileToSave);
+
+        try {
+            const response = await fetch('/api/createUser', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(profileToSave),
+            });
+
+            if (response.ok) {
+                setSubmissionMessageType('success');
+                setSubmissionMessage('Profile created successfully!');
+            } else {
+                const errorData = await response.json();
+                setSubmissionMessageType('error');
+                setSubmissionMessage(`Error creating profile: ${errorData.message}`);
+            }
+        } catch (error) {
+            console.error('Error creating profile:', error);
+            setSubmissionMessageType('error');
+            setSubmissionMessage('An unexpected error occurred');
         }
 
-        localStorage.setItem('profiles', JSON.stringify(profiles));
         setTimeout(() => setSubmissionMessage(''), 5000);
     };
+    // const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
+    //     event.preventDefault();
+    //     const profiles = JSON.parse(localStorage.getItem('profiles') || '[]');
+    //     const profileIndex = profiles.findIndex((p: Profile) => p.email === newProfile.email);
+
+    //     const profileToSave = { ...newProfile, backgroundImageUrl }; // Explicitly set backgroundImageUrl
+
+    //     if (profileIndex !== -1) {
+    //         // Profile exists - Update the existing profile
+    //         profiles[profileIndex] = profileToSave;
+    //         setSubmissionMessageType('success');
+    //         setSubmissionMessage('Profile updated successfully!');
+    //     } else {
+    //         // New profile - Add it
+    //         profiles.push(profileToSave);
+    //         setSubmissionMessageType('success');
+    //         setSubmissionMessage('Profile added successfully!');
+    //     }
+
+    //     localStorage.setItem('profiles', JSON.stringify(profiles));
+    //     setTimeout(() => setSubmissionMessage(''), 5000);
+    // };
 
     const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>, type: 'profile' | 'background') => {
         if (e.target.files && e.target.files[0]) {
