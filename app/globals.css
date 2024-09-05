@@ -98,8 +98,6 @@ dark:text-gray-400 dark:hover:bg-gray-800 dark:focus:ring-gray-900
 .logo_style{
   @apply jura text-blue-600 dark:text-gray-200 relative flex place-items-center text-9xl
 }
-<<<<<<< HEAD
-=======
 .profile-card {
   width: 450px; /* Custom width */
   height: 400px; /* Custom height */
@@ -203,4 +201,3 @@ dark:text-gray-400 dark:hover:bg-gray-800 dark:focus:ring-gray-900
 }
 
 
->>>>>>> 5becf6c (Test changes for Social Page)
