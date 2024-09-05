@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import SocialRightSideComp from '@/components/layout/SocialRightSideComp';
 import { useUser } from '@clerk/nextjs'
-import { interestsOptions } from '@/constants/InterestOptions'
+import { interestsOptions } from '@/constants/InterestOptions';
 import SocialBottomBarComp from '@/components/layout/SocialBottomBarComp';
 import { NotificationProvider } from '@/contexts/NotificatonContext';
 
