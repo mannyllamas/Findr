@@ -9,48 +9,29 @@
     "lint": "next lint"
   },
   "dependencies": {
-<<<<<<< HEAD
-    "@clerk/nextjs": "^4.30.0",
-    "@cloudscape-design/components": "^3.0.618",
-    "@cloudscape-design/global-styles": "^1.0.27",
-=======
     "@clerk/nextjs": "^4.29.9",
     "@clerk/themes": "^1.7.14",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.0",
->>>>>>> 7867fdc (dependencies added)
     "@heroicons/react": "^2.1.1",
     "@hookform/resolvers": "^3.3.4",
     "@ionic/react": "^7.7.2",
     "@tailwindcss/forms": "^0.5.7",
     "@types/react-router-dom": "^5.3.3",
-<<<<<<< HEAD
-<<<<<<< HEAD
     "axios": "^1.6.8",
-=======
-    "aws-sdk": "^2.1584.0",
-=======
     "aws-sdk": "^2.1679.0",
->>>>>>> 15644cb (Your commit message)
     "browser-image-compression": "^2.0.2",
     "date-fns": "^3.6.0",
->>>>>>> 5becf6c (Test changes for Social Page)
     "flowbite": "^2.2.1",
     "flowbite-react": "^0.7.2",
-<<<<<<< HEAD
-    "next": "14.1.0",
-=======
     "next": "^14.2.5",
->>>>>>> 15644cb (Your commit message)
     "react": "^18",
     "react-dom": "^18",
-<<<<<<< HEAD
+
     "react-hook-form": "^7.51.3",
-    "react-router-dom": "^6.22.0"
-=======
     "react-router-dom": "^6.22.0",
     "react-spring": "^9.7.3"
->>>>>>> 5becf6c (Test changes for Social Page)
+
   },
   "devDependencies": {
     "@types/aws-sdk": "^2.7.0",
