@@ -3,6 +3,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import NavBar from '../NavBar/navBar';
+
 import Link from 'next/link';
 import { interestsOptions } from '@/constants/InterestOptions'
 import { useUser, currentUser, } from '@clerk/nextjs'
