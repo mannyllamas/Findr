@@ -1,0 +1,162 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model address {
+  address_id     Int           @id @default(autoincrement())
+  street_address String        @db.VarChar(255)
+  city_id        Int?
+  postal_code_id Int?
+  cities         cities?       @relation(fields: [city_id], references: [city_id], onUpdate: NoAction)
+  postal_codes   postal_codes? @relation(fields: [postal_code_id], references: [postal_code_id], onUpdate: NoAction)
+  companies      companies[]
+  favorites      favorites[]
+  interns        interns[]
+}
+
+model cities {
+  city_id        Int              @id @default(autoincrement())
+  city_name      String           @db.VarChar(255)
+  state          String?          @db.VarChar(255)
+  country        String?          @db.VarChar(255)
+  zip_codes      String?
+  address        address[]
+  company_cities company_cities[]
+  interns        interns[]
+  persons        persons[]
+  postal_codes   postal_codes[]
+}
+
+model companies {
+  company_id           Int              @id @default(autoincrement())
+  company_name         String           @db.VarChar(255)
+  url                  String?          @db.VarChar(255)
+  about                String?
+  logo_image_path      String?          @db.VarChar(255)
+  header_image_path    String?          @db.VarChar(255)
+  headquarters_address Int?
+  address              address?         @relation(fields: [headquarters_address], references: [address_id], onUpdate: NoAction)
+  company_cities       company_cities[]
+  contacts             contacts[]
+  interns              interns[]
+}
+
+model company_cities {
+  company_id Int
+  city_id    Int
+  cities     cities    @relation(fields: [city_id], references: [city_id], onDelete: Cascade, onUpdate: NoAction)
+  companies  companies @relation(fields: [company_id], references: [company_id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@id([company_id, city_id])
+}
+
+model contacts {
+  contact_id Int        @id @default(autoincrement())
+  person_id  Int?
+  company_id Int?
+  rank       Int?
+  companies  companies? @relation(fields: [company_id], references: [company_id], onDelete: Cascade, onUpdate: NoAction)
+  persons    persons?   @relation(fields: [person_id], references: [person_id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model favorites {
+  intern_id  Int
+  address_id Int
+  address    address @relation(fields: [address_id], references: [address_id], onDelete: Cascade, onUpdate: NoAction)
+  interns    interns @relation(fields: [intern_id], references: [intern_id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@id([intern_id, address_id])
+}
+
+model historical_records {
+  record_id   Int              @id @default(autoincrement())
+  person_id   Int?
+  entity_type entity_type_enum
+  entity_id   Int
+  start_date  DateTime         @db.Date
+  end_date    DateTime?        @db.Date
+  persons     persons?         @relation(fields: [person_id], references: [person_id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model images {
+  image_id    Int              @id @default(autoincrement())
+  image_path  String           @db.VarChar(255)
+  image_type  image_type_enum
+  entity_type entity_type_enum
+  entity_id   Int
+}
+
+model interns {
+  intern_id       Int         @id @default(autoincrement())
+  person_id       Int?
+  company_id      Int?
+  housing_city    Int?
+  housing_address Int?
+  favorites       favorites[]
+  companies       companies?  @relation(fields: [company_id], references: [company_id], onDelete: Cascade, onUpdate: NoAction)
+  address         address?    @relation(fields: [housing_address], references: [address_id], onUpdate: NoAction)
+  cities          cities?     @relation(fields: [housing_city], references: [city_id], onUpdate: NoAction)
+  persons         persons?    @relation(fields: [person_id], references: [person_id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model persons {
+  person_id          Int                  @id @default(autoincrement())
+  first_name         String               @db.VarChar(255)
+  last_name          String               @db.VarChar(255)
+  email              String               @unique @db.VarChar(255)
+  phone_number       String?              @db.VarChar(20)
+  current_city       Int?
+  iso_housing        Boolean?             @default(false)
+  iso_roommate       Boolean?             @default(false)
+  person_type        person_type_enum
+  contacts           contacts[]
+  historical_records historical_records[]
+  interns            interns[]
+  cities             cities?              @relation(fields: [current_city], references: [city_id], onUpdate: NoAction)
+  preferences        preferences[]
+}
+
+model postal_codes {
+  postal_code_id Int       @id @default(autoincrement())
+  postal_code    String    @db.VarChar(20)
+  region         String?   @db.VarChar(255)
+  city_id        Int?
+  address        address[]
+  cities         cities?   @relation(fields: [city_id], references: [city_id], onUpdate: NoAction)
+}
+
+model preferences {
+  person_id       Int
+  preference_type preference_type_enum
+  value           Boolean
+  persons         persons              @relation(fields: [person_id], references: [person_id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@id([person_id, preference_type])
+}
+
+enum entity_type_enum {
+  company
+  city
+  roommate
+}
+
+enum image_type_enum {
+  logo
+  header
+  other
+}
+
+enum person_type_enum {
+  intern
+  contact
+}
+
+enum preference_type_enum {
+  iso_housing
+  iso_roommate
+}
