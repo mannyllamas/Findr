@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 // import { useRouter } from 'next/router'
 import Link from 'next/link';
 import { interestsOptions } from '@/constants/InterestOptions'
-import { useUser, currentUser, } from '@clerk/nextjs'
+import { useUser } from '@clerk/nextjs'
 import Image from 'next/image';
 import { profile } from 'console';
 
@@ -129,7 +129,7 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({ isOpen, onClose }) 
         if (user) {
             setNewProfile(prevState => ({
                 ...prevState,
-                imageUrl: user.profileImageUrl || prevState.imageUrl,
+                imageUrl: user.imageUrl || prevState.imageUrl,
             }));
         }
     }, [user]);
