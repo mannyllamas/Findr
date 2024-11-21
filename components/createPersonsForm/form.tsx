@@ -81,7 +81,11 @@ export default function CreatePersonForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-lg mx-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+    <form
+      onSubmit={handleSubmit}
+      method="POST"
+      className="max-w-lg mx-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+    >
       <h1 className="text-2xl font-bold mb-6">Create a Person</h1>
 
       {message && (
