@@ -6,7 +6,7 @@ import NavBar from '../NavBar/navBar';
 import Link from 'next/link';
 // import { interestsOptions } from '@/constants/InterestOptions'
 import { interestsOptions } from '@/constants/InterestOptions'
-import { useUser, currentUser, } from '@clerk/nextjs'
+import { useUser} from '@clerk/nextjs'
 import Image from 'next/image';
 import { profile } from 'console';
 import imageCompression, { Options } from 'browser-image-compression';
@@ -114,7 +114,7 @@ export default function AddProfile() {
         if (user) {
             setNewProfile(prevState => ({
                 ...prevState,
-                imageUrl: user.profileImageUrl || prevState.imageUrl,
+                imageUrl: user.imageUrl || prevState.imageUrl,
             }));
         }
     }, [user]);
@@ -131,65 +131,65 @@ export default function AddProfile() {
         }));
     };
 
-    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
-        event.preventDefault();
-
-        const profileToSave: Profile = {
-            ...newProfile,
-            userId: newProfile.userId,  // Ensure userId is included
-            backgroundImageUrl,  // Ensure backgroundImageUrl is included only if you're using it
-        };
-
-        // Log the profile data to check that all required fields are populated
-        console.log('Submitting Profile:', profileToSave);
-
-        try {
-            const response = await fetch('/api/createUser', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(profileToSave),
-            });
-
-            if (response.ok) {
-                setSubmissionMessageType('success');
-                setSubmissionMessage('Profile created successfully!');
-            } else {
-                const errorData = await response.json();
-                setSubmissionMessageType('error');
-                setSubmissionMessage(`Error creating profile: ${errorData.message}`);
-            }
-        } catch (error) {
-            console.error('Error creating profile:', error);
-            setSubmissionMessageType('error');
-            setSubmissionMessage('An unexpected error occurred');
-        }
-
-        setTimeout(() => setSubmissionMessage(''), 5000);
-    };
-    // const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
+    // const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
     //     event.preventDefault();
-    //     const profiles = JSON.parse(localStorage.getItem('profiles') || '[]');
-    //     const profileIndex = profiles.findIndex((p: Profile) => p.email === newProfile.email);
 
-    //     const profileToSave = { ...newProfile, backgroundImageUrl }; // Explicitly set backgroundImageUrl
+    //     const profileToSave: Profile = {
+    //         ...newProfile,
+    //         userId: newProfile.userId,  // Ensure userId is included
+    //         backgroundImageUrl,  // Ensure backgroundImageUrl is included only if you're using it
+    //     };
 
-    //     if (profileIndex !== -1) {
-    //         // Profile exists - Update the existing profile
-    //         profiles[profileIndex] = profileToSave;
-    //         setSubmissionMessageType('success');
-    //         setSubmissionMessage('Profile updated successfully!');
-    //     } else {
-    //         // New profile - Add it
-    //         profiles.push(profileToSave);
-    //         setSubmissionMessageType('success');
-    //         setSubmissionMessage('Profile added successfully!');
+    //     // Log the profile data to check that all required fields are populated
+    //     console.log('Submitting Profile:', profileToSave);
+
+    //     try {
+    //         const response = await fetch('/api/createUser', {
+    //             method: 'POST',
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //             },
+    //             body: JSON.stringify(profileToSave),
+    //         });
+
+    //         if (response.ok) {
+    //             setSubmissionMessageType('success');
+    //             setSubmissionMessage('Profile created successfully!');
+    //         } else {
+    //             const errorData = await response.json();
+    //             setSubmissionMessageType('error');
+    //             setSubmissionMessage(`Error creating profile: ${errorData.message}`);
+    //         }
+    //     } catch (error) {
+    //         console.error('Error creating profile:', error);
+    //         setSubmissionMessageType('error');
+    //         setSubmissionMessage('An unexpected error occurred');
     //     }
 
-    //     localStorage.setItem('profiles', JSON.stringify(profiles));
     //     setTimeout(() => setSubmissionMessage(''), 5000);
     // };
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
+        event.preventDefault();
+        const profiles = JSON.parse(localStorage.getItem('profiles') || '[]');
+        const profileIndex = profiles.findIndex((p: Profile) => p.email === newProfile.email);
+
+        const profileToSave = { ...newProfile, backgroundImageUrl }; // Explicitly set backgroundImageUrl
+
+        if (profileIndex !== -1) {
+            // Profile exists - Update the existing profile
+            profiles[profileIndex] = profileToSave;
+            setSubmissionMessageType('success');
+            setSubmissionMessage('Profile updated successfully!');
+        } else {
+            // New profile - Add it
+            profiles.push(profileToSave);
+            setSubmissionMessageType('success');
+            setSubmissionMessage('Profile added successfully!');
+        }
+
+        localStorage.setItem('profiles', JSON.stringify(profiles));
+        setTimeout(() => setSubmissionMessage(''), 5000);
+    };
 
     const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>, type: 'profile' | 'background') => {
         if (e.target.files && e.target.files[0]) {
