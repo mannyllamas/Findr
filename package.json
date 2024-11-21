@@ -9,7 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@clerk/nextjs": "^4.29.9",
+    "@clerk/clerk-react": "^5.14.0",
+    "@clerk/nextjs": "^6.4.0",
     "@clerk/themes": "^1.7.14",
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
@@ -18,7 +19,7 @@
     "@ionic/react": "^7.7.2",
     "@mui/icons-material": "^6.0.2",
     "@mui/material": "^6.0.2",
-    "@prisma/client": "^5.21.1",
+    "@prisma/client": "^5.22.0",
     "@tailwindcss/forms": "^0.5.7",
     "@types/react-router-dom": "^5.3.3",
     "aws-sdk": "^2.1679.0",
@@ -28,7 +29,7 @@
     "flowbite": "^2.2.1",
     "flowbite-react": "^0.10.1",
     "next": "^14.2.8",
-    "prisma": "^5.21.1",
+    "prisma": "^5.22.0",
     "react": "^18",
     "react-dom": "^18",
     "react-hook-form": "^7.51.3",
