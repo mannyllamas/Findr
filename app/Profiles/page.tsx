@@ -112,17 +112,24 @@ const Profiles: React.FC = () => {
     setIsDropdownStatusOpen(false); // Close the dropdown after a selection is made
   };
 
-  // Filter function adjustment
-  const filteredProfiles = profiles.filter(profile => {
+  // Filter function adjustment for search bar 
+  const filteredProfiles = profiles.filter((profile) => {
+    const lowerSearchTerm = searchTerm.toLowerCase();
+  
     const matchesOnlineStatus = filterOnlineStatus !== null ? profile.isOnline === filterOnlineStatus : true;
-    const matchesInterests = selectedInterests.length > 0 ? selectedInterests.every(interest => profile.interests.includes(interest)) : true;
+    const matchesInterests = selectedInterests.length > 0 ? selectedInterests.every((interest) => profile.interests.includes(interest)) : true;
     const matchesGender = filterGender ? profile.gender === filterGender : true;
-
-    const matchesSearchTerm = profile.name.toLowerCase().includes(searchTerm.toLowerCase()) || profile.email.toLowerCase().includes(searchTerm.toLowerCase());//NEW for search bar
-
+  
+    const matchesSearchTerm =
+      profile.name.toLowerCase().includes(lowerSearchTerm) ||
+      profile.email.toLowerCase().includes(lowerSearchTerm) ||
+      profile.role.toLowerCase().includes(lowerSearchTerm) ||
+      (profile.major && profile.major.toLowerCase().includes(lowerSearchTerm)) ||
+      profile.interests.some((interest) => interest.toLowerCase().includes(lowerSearchTerm));
+  
     return matchesOnlineStatus && matchesInterests && matchesGender && matchesSearchTerm;
   });
-
+    
   // UI for selecting interest
   const handleInterestChange = (event: React.ChangeEvent<HTMLInputElement>, interest: string) => {
     const checked = event.target.checked;

@@ -151,7 +151,7 @@ export default function SocialRightSideComp({ onSearchChange }: SocialRightSideC
         <hr className='border-t-2 border-blue-300 my-7 w-3/4 mx-auto' />
 
         <div className='flex flex-col items-center'>
-          <UserButton appearance={{ baseTheme: dark }} afterSignOutUrl="/sign-in" />
+          <UserButton/>
           <p className="text-light-1 font-bold">Manage Account</p>
         </div>
         {/* Modal toggle button */}
