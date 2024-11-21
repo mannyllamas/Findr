@@ -21,7 +21,7 @@ const SocialSearchBar: React.FC<SocialSearchBarProps> = ({ onSearchChange }) => 
       <input
         type="text"
         className="search-bar"
-        placeholder="Search by name, email, role, major, gender, or interest..."
+        placeholder="Name, email, role, major, gender, or interest..."
         value={search}
         onChange={handleChange}
       />

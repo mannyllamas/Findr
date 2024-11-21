@@ -21,7 +21,7 @@ interface Profile {
   backgroundImageUrl?: string; // New - Background image for profile
   school?: string; // Added field for school
   major?: string;  // Added field for major
-  gender?: string;
+  gender: string;
 
 }
 
@@ -111,7 +111,7 @@ const Profiles: React.FC = () => {
     setCurrentStatus(label); // This changes the button label to reflect the current filter
     setIsDropdownStatusOpen(false); // Close the dropdown after a selection is made
   };
-
+  
   // Filter function adjustment for search bar 
   const filteredProfiles = profiles.filter((profile) => {
     const lowerSearchTerm = searchTerm.toLowerCase();
@@ -124,7 +124,9 @@ const Profiles: React.FC = () => {
       profile.name.toLowerCase().includes(lowerSearchTerm) ||
       profile.email.toLowerCase().includes(lowerSearchTerm) ||
       profile.role.toLowerCase().includes(lowerSearchTerm) ||
+      profile.gender.toLowerCase().includes(lowerSearchTerm) ||
       (profile.major && profile.major.toLowerCase().includes(lowerSearchTerm)) ||
+      (profile.school && profile.school.toLowerCase().includes(lowerSearchTerm)) || // Add school filtering
       profile.interests.some((interest) => interest.toLowerCase().includes(lowerSearchTerm));
   
     return matchesOnlineStatus && matchesInterests && matchesGender && matchesSearchTerm;
