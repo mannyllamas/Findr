@@ -87,7 +87,7 @@ export default function CreatePersonForm() {
       className="max-w-lg mx-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
     >
       <h1 className="text-2xl font-bold mb-6">Create a Person</h1>
-
+  
       {message && (
         <div
           className={`mb-4 p-3 rounded ${
@@ -97,7 +97,7 @@ export default function CreatePersonForm() {
           {message.text}
         </div>
       )}
-
+  
       {/* Form Fields */}
       <div className="mb-4">
         <label htmlFor="first_name" className="block text-gray-700 text-sm font-bold mb-2">
@@ -113,58 +113,55 @@ export default function CreatePersonForm() {
           required
         />
       </div>
-
-      {/* Similar fields for last_name, email, phone_number, current_city */}
-      {/* Preferences Fields */}
-
+  
       {/* Last Name Field */}
-<div className="mb-4">
-  <label htmlFor="last_name" className="block text-gray-700 text-sm font-bold mb-2">
-    Last Name
-  </label>
-  <input
-    type="text"
-    id="last_name"
-    name="last_name"
-    value={formData.last_name}
-    onChange={handleChange}
-    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-    required
-  />
-</div>
-
-{/* Email Field */}
-<div className="mb-4">
-  <label htmlFor="email" className="block text-gray-700 text-sm font-bold mb-2">
-    Email
-  </label>
-  <input
-    type="email"
-    id="email"
-    name="email"
-    value={formData.email}
-    onChange={handleChange}
-    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-    required
-  />
-</div>
-
-{/* Phone Number Field */}
-<div className="mb-4">
-  <label htmlFor="phone_number" className="block text-gray-700 text-sm font-bold mb-2">
-    Phone Number
-  </label>
-  <input
-    type="text"
-    id="phone_number"
-    name="phone_number"
-    value={formData.phone_number}
-    onChange={handleChange}
-    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-  />
-</div>
-
-
+      <div className="mb-4">
+        <label htmlFor="last_name" className="block text-gray-700 text-sm font-bold mb-2">
+          Last Name
+        </label>
+        <input
+          type="text"
+          id="last_name"
+          name="last_name"
+          value={formData.last_name}
+          onChange={handleChange}
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          required
+        />
+      </div>
+  
+      {/* Email Field */}
+      <div className="mb-4">
+        <label htmlFor="email" className="block text-gray-700 text-sm font-bold mb-2">
+          Email
+        </label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          value={formData.email}
+          onChange={handleChange}
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          required
+        />
+      </div>
+  
+      {/* Phone Number Field */}
+      <div className="mb-4">
+        <label htmlFor="phone_number" className="block text-gray-700 text-sm font-bold mb-2">
+          Phone Number
+        </label>
+        <input
+          type="text"
+          id="phone_number"
+          name="phone_number"
+          value={formData.phone_number}
+          onChange={handleChange}
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        />
+      </div>
+  
+      {/* Preferences Fields */}
       <div className="mb-4">
         <label className="block text-gray-700 text-sm font-bold mb-2">Preferences</label>
         <div>
@@ -192,7 +189,7 @@ export default function CreatePersonForm() {
           </label>
         </div>
       </div>
-
+  
       {/* Person Type */}
       <div className="mb-4">
         <label htmlFor="person_type" className="block text-gray-700 text-sm font-bold mb-2">
@@ -209,7 +206,7 @@ export default function CreatePersonForm() {
           <option value="contact">Contact</option>
         </select>
       </div>
-
+  
       <div className="flex items-center justify-between">
         <button
           type="submit"
@@ -223,4 +220,4 @@ export default function CreatePersonForm() {
       </div>
     </form>
   );
-}
+};
