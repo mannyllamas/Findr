@@ -6,7 +6,7 @@ import SocialSearchBar from './SocialSearchBar'
 import { UserButton } from '@clerk/nextjs'
 import { dark } from '@clerk/themes'
 import { useAuth } from '@clerk/nextjs'
-import { useUser, currentUser, } from '@clerk/nextjs'
+import { useUser} from '@clerk/nextjs'
 import EditProfileModal from "../Modals/EditProfileModal";
 
 // Define an interface for the sponsor object
@@ -24,31 +24,31 @@ interface SocialRightSideCompProps {
 
 
 const sponsors = [
-  {
-    imageUrl: "/assets/apt1.png",
-    alt: "ad",
-    title: "River Vista",
-    description: "With thoughtful design and exclusive community amenities,River Vista Apartments is your destination for luxury apartments in Wichita, Kansas! We've redefined what upscale living means to youin our exceptional studio, one, and two-bedroom apartments, that offer up to 1,210 square feet of living space with a collection of interior touches.",
+  // {
+  //   imageUrl: "/assets/apt1.png",
+  //   alt: "ad",
+  //   title: "River Vista",
+  //   description: "With thoughtful design and exclusive community amenities,River Vista Apartments is your destination for luxury apartments in Wichita, Kansas! We've redefined what upscale living means to youin our exceptional studio, one, and two-bedroom apartments, that offer up to 1,210 square feet of living space with a collection of interior touches.",
 
-  },
-  {
-    imageUrl: "/assets/apt2.png",
-    alt: "ad",
-    title: "Union Mill",
-    description: "Experience the luxury of Union Mill, a sophisticated community of active adult apartments nestled in Wichita, Kansas. Explore a variety of modern floorplans, including 1, 2, and 3 bedrooms, to discover the ideal smart apartment for your lifestyle."
-  },
-  {
-    imageUrl: "/assets/apt3.png",
-    alt: "ad",
-    title: "The Avante",
-    description: "Experience the joy and convenience of West-side Wichita living when you join our brand-new Avante Apartments at 37th and Ridge Road. "
-  },
-  {
-    imageUrl: "/assets/apt4.png",
-    alt: "ad",
-    title: "Parc at 21st and Rock",
-    description: "Parc at 21st & Rock is a one- and two-bedroom apartment community conveniently located minutes from downtown Wichita, KS.Our community features completely remodeled living spaces along with a variety of desired features and amenities. Enjoy our sparkling pool, community playground, with easy access to hiking and bike trails."
-  },
+  // },
+  // {
+  //   imageUrl: "/assets/apt2.png",
+  //   alt: "ad",
+  //   title: "Union Mill",
+  //   description: "Experience the luxury of Union Mill, a sophisticated community of active adult apartments nestled in Wichita, Kansas. Explore a variety of modern floorplans, including 1, 2, and 3 bedrooms, to discover the ideal smart apartment for your lifestyle."
+  // },
+  // {
+  //   imageUrl: "/assets/apt3.png",
+  //   alt: "ad",
+  //   title: "The Avante",
+  //   description: "Experience the joy and convenience of West-side Wichita living when you join our brand-new Avante Apartments at 37th and Ridge Road. "
+  // },
+  // {
+  //   imageUrl: "/assets/apt4.png",
+  //   alt: "ad",
+  //   title: "Parc at 21st and Rock",
+  //   description: "Parc at 21st & Rock is a one- and two-bedroom apartment community conveniently located minutes from downtown Wichita, KS.Our community features completely remodeled living spaces along with a variety of desired features and amenities. Enjoy our sparkling pool, community playground, with easy access to hiking and bike trails."
+  // },
   {
     imageUrl: "/assets/R1.png",
     alt: "ad",
@@ -151,7 +151,7 @@ export default function SocialRightSideComp({ onSearchChange }: SocialRightSideC
         <hr className='border-t-2 border-blue-300 my-7 w-3/4 mx-auto' />
 
         <div className='flex flex-col items-center'>
-          <UserButton appearance={{ baseTheme: dark }} afterSignOutUrl="/sign-in" />
+          <UserButton/>
           <p className="text-light-1 font-bold">Manage Account</p>
         </div>
         {/* Modal toggle button */}
