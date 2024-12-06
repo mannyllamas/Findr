@@ -1,14 +1,183 @@
-"use client"
-import { useEffect, useState } from 'react';
-import Image from 'next/image';
-import SocialRightSideComp from '@/components/layout/SocialRightSideComp';
-import { useUser } from '@clerk/nextjs'
-import { interestsOptions } from '@/constants/InterestOptions';
-import SocialBottomBarComp from '@/components/layout/SocialBottomBarComp';
-import { NotificationProvider } from '@/contexts/NotificatonContext';
+// "use client"
+// import { useEffect, useState } from 'react';
+// import Image from 'next/image';
+// import SocialRightSideComp from '@/components/layout/SocialRightSideComp';
+// import { useUser } from '@clerk/nextjs'
+// import { interestsOptions } from '@/constants/InterestOptions';
+// import SocialBottomBarComp from '@/components/layout/SocialBottomBarComp';
+// import { NotificationProvider } from '@/contexts/NotificatonContext';
+
+// interface Profile {
+
+//   name: string;
+//   email: string;
+//   role: string;
+//   imageUrl: string;
+//   lastSeen?: string;
+//   lastSeenDateTime?: string;
+//   isOnline: boolean;
+//   interests: string[];
+//   introduction?: string; // New
+//   backgroundImageUrl?: string; // New - Background image for profile
+//   school?: string; // Added field for school
+//   major?: string;  // Added field for major
+//   gender: string;
+
+// }
+
+// const Profiles: React.FC = () => {
+
+
+
+//   const [profiles, setProfiles] = useState<Profile[]>([]);
+//   const [filterOnlineStatus, setFilterOnlineStatus] = useState<boolean | null>(null);
+//   const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
+//   const [isModalOpen, setIsModalOpen] = useState(false); // state to manage the visibility of the modal for selectable interest 
+//   const [isDropdownOpen, setIsDropdownOpen,] = useState(false);
+//   const [isDropdownStatusOpen, setIsDropdownStatusOpen,] = useState(false);
+//   const [currentStatus, setCurrentStatus] = useState('Filter by Roommate Ready');
+//   const [selectedProfile, setSelectedProfile] = useState<Profile | null>(null);
+//   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false); // state to manage the visibi````lity of the modal for selectable interest 
+//   const [filterGender, setFilterGender] = useState<string | null>(null); // null indicates no filter
+//   const [isDropdownGenderOpen, setIsDropdownGenderOpen] = useState(false);
+// // const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+// const [windowWidth, setWindowWidth] = useState(0); // Initialize to 0 or a sensible default width
+//   // Add a state for managing the search term
+//   const [searchTerm, setSearchTerm] = useState('');
+
+// // Function to truncate text
+// const truncateText = (text: string) => {
+//   // Adjust 1024 according to your 'lg' breakpoint
+//   if (windowWidth <= 1024 && text.length > 3) {
+//     return text.substring(0, 6) + '...';
+//   }
+//   return text;
+// };
+//   //TEST!
+//   useEffect(() => {
+//     try {
+//       const storedProfiles = JSON.parse(localStorage.getItem('profiles') || '[]');
+//       setProfiles(storedProfiles);
+//       console.log("Profiles loaded from storage:", storedProfiles);
+//     } catch (error) {
+//       console.error("Failed to parse profiles from localStorage", error);
+//     }
+//   }, []);
+//   //Original  
+//   // useEffect(() => {
+//   //   const storedProfiles = JSON.parse(localStorage.getItem('profiles') || '[]');
+//   //   setProfiles(storedProfiles);
+//   //   console.log("Profiles loaded from storage:", storedProfiles); // This logs the profiles as they are initially loaded from storage TEST!
+//   // }, []);
+
+
+//   useEffect(() => {
+//     // Correctly set windowWidth after component mounts
+//     setWindowWidth(window.innerWidth);
+
+//     // Define a function to handle subsequent resize events
+//     const handleResize = () => {
+//       setWindowWidth(window.innerWidth);
+//     };
+
+//     // Add event listener for resize
+//     window.addEventListener('resize', handleResize);
+
+//     // Cleanup function to remove the event listener
+//     return () => window.removeEventListener('resize', handleResize);
+//   }, []); // Empty dependency array means this effect runs once on mount
+
+
+
+//   useEffect(() => {
+//     const storedProfiles = JSON.parse(localStorage.getItem('profiles') || '[]');
+//     setProfiles(storedProfiles);
+
+//   }, []);
+
+//   const { isLoaded, isSignedIn } = useUser();
+
+//   if (!isLoaded || !isSignedIn) {
+//     return null;
+//   }
+
+// // Function to update search term
+// const handleSearchChange = (searchTerm: string) => {
+//   setSearchTerm(searchTerm);
+// };
+
+//   const handleOnlineStatusChange = (status: boolean | null, label: string) => {
+//     setFilterOnlineStatus(status); // This sets the actual filter status (true for online, false for offline, null for all)
+//     setCurrentStatus(label); // This changes the button label to reflect the current filter
+//     setIsDropdownStatusOpen(false); // Close the dropdown after a selection is made
+//   };
+
+//   // Filter function adjustment for search bar 
+//   const filteredProfiles = profiles.filter((profile) => {
+//     const lowerSearchTerm = searchTerm.toLowerCase();
+
+//     const matchesOnlineStatus = filterOnlineStatus !== null ? profile.isOnline === filterOnlineStatus : true;
+//     const matchesInterests = selectedInterests.length > 0 ? selectedInterests.every((interest) => profile.interests.includes(interest)) : true;
+//     const matchesGender = filterGender ? profile.gender === filterGender : true;
+
+//     const matchesSearchTerm =
+//       profile.name.toLowerCase().includes(lowerSearchTerm) ||
+//       profile.email.toLowerCase().includes(lowerSearchTerm) ||
+//       profile.role.toLowerCase().includes(lowerSearchTerm) ||
+//       profile.gender.toLowerCase().includes(lowerSearchTerm) ||
+//       (profile.major && profile.major.toLowerCase().includes(lowerSearchTerm)) ||
+//       (profile.school && profile.school.toLowerCase().includes(lowerSearchTerm)) || // Add school filtering
+//       profile.interests.some((interest) => interest.toLowerCase().includes(lowerSearchTerm));
+
+//     return matchesOnlineStatus && matchesInterests && matchesGender && matchesSearchTerm;
+//   });
+
+// // UI for selecting interest
+// const handleInterestChange = (event: React.ChangeEvent<HTMLInputElement>, interest: string) => {
+//   const checked = event.target.checked;
+//   setSelectedInterests(prev => {
+//     if (checked) {
+//       // Add interest if it's not already included and prevent duplicates
+//       return prev.includes(interest) ? prev : [...prev, interest];
+//     } else {
+//       // Remove interest if it's already included
+//       return prev.filter(i => i !== interest);
+//     }
+//   });
+// };
+
+// const handleProfileClick = (profile: Profile) => {
+//   setSelectedProfile(profile);
+//   // You might also want to toggle the visibility of the modal here if it's not solely based on whether selectedProfile is null
+//   setIsProfileModalOpen(true); // Assuming this is the modal state you mentioned
+// };
+
+// const handleGenderChange = (gender: string | null) => {
+//   setFilterGender(gender); // Set the selected gender filter
+//   setIsDropdownGenderOpen(false); // Close the dropdown
+// };
+
+
+
+// // Function to toggle the modal's
+// const toggleProfileModal = () => {
+//   setIsProfileModalOpen(!isProfileModalOpen);
+
+// }
+// const toggleModal = () => {
+//   setIsModalOpen(!isModalOpen);
+
+// };
+"use client";
+import { useEffect, useState } from "react";
+import Image from "next/image";
+import SocialRightSideComp from "@/components/layout/SocialRightSideComp";
+import { useUser } from "@clerk/nextjs";
+import { interestsOptions } from "@/constants/InterestOptions";
+import SocialBottomBarComp from "@/components/layout/SocialBottomBarComp";
+import { NotificationProvider } from "@/contexts/NotificatonContext";
 
 interface Profile {
-
   name: string;
   email: string;
   role: string;
@@ -17,121 +186,97 @@ interface Profile {
   lastSeenDateTime?: string;
   isOnline: boolean;
   interests: string[];
-  introduction?: string; // New
-  backgroundImageUrl?: string; // New - Background image for profile
-  school?: string; // Added field for school
-  major?: string;  // Added field for major
+  introduction?: string;
+  backgroundImageUrl?: string;
+  school?: string;
+  major?: string;
   gender: string;
-
 }
 
 const Profiles: React.FC = () => {
-
-
-
   const [profiles, setProfiles] = useState<Profile[]>([]);
+  const [isLoading, setIsLoading] = useState(false); // Loading state for API call
   const [filterOnlineStatus, setFilterOnlineStatus] = useState<boolean | null>(null);
   const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
-  const [isModalOpen, setIsModalOpen] = useState(false); // state to manage the visibility of the modal for selectable interest 
-  const [isDropdownOpen, setIsDropdownOpen,] = useState(false);
-  const [isDropdownStatusOpen, setIsDropdownStatusOpen,] = useState(false);
-  const [currentStatus, setCurrentStatus] = useState('Filter by Roommate Ready');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isDropdownStatusOpen, setIsDropdownStatusOpen] = useState(false);
+  const [currentStatus, setCurrentStatus] = useState("Filter by Roommate Ready");
   const [selectedProfile, setSelectedProfile] = useState<Profile | null>(null);
-  const [isProfileModalOpen, setIsProfileModalOpen] = useState(false); // state to manage the visibi````lity of the modal for selectable interest 
-  const [filterGender, setFilterGender] = useState<string | null>(null); // null indicates no filter
+  const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
+  const [filterGender, setFilterGender] = useState<string | null>(null);
   const [isDropdownGenderOpen, setIsDropdownGenderOpen] = useState(false);
-  // const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [searchTerm, setSearchTerm] = useState("");
   const [windowWidth, setWindowWidth] = useState(0); // Initialize to 0 or a sensible default width
-  // Add a state for managing the search term
-  const [searchTerm, setSearchTerm] = useState('');
-
-  // Function to truncate text
-  const truncateText = (text: string) => {
-    // Adjust 1024 according to your 'lg' breakpoint
-    if (windowWidth <= 1024 && text.length > 3) {
-      return text.substring(0, 6) + '...';
-    }
-    return text;
-  };
-  //TEST!
-  useEffect(() => {
-    try {
-      const storedProfiles = JSON.parse(localStorage.getItem('profiles') || '[]');
-      setProfiles(storedProfiles);
-      console.log("Profiles loaded from storage:", storedProfiles);
-    } catch (error) {
-      console.error("Failed to parse profiles from localStorage", error);
-    }
-  }, []);
-  //Original  
-  // useEffect(() => {
-  //   const storedProfiles = JSON.parse(localStorage.getItem('profiles') || '[]');
-  //   setProfiles(storedProfiles);
-  //   console.log("Profiles loaded from storage:", storedProfiles); // This logs the profiles as they are initially loaded from storage TEST!
-  // }, []);
-
-
-  useEffect(() => {
-    // Correctly set windowWidth after component mounts
-    setWindowWidth(window.innerWidth);
-
-    // Define a function to handle subsequent resize events
-    const handleResize = () => {
-      setWindowWidth(window.innerWidth);
-    };
-
-    // Add event listener for resize
-    window.addEventListener('resize', handleResize);
-
-    // Cleanup function to remove the event listener
-    return () => window.removeEventListener('resize', handleResize);
-  }, []); // Empty dependency array means this effect runs once on mount
-
-
-
-  useEffect(() => {
-    const storedProfiles = JSON.parse(localStorage.getItem('profiles') || '[]');
-    setProfiles(storedProfiles);
-
-  }, []);
-
   const { isLoaded, isSignedIn } = useUser();
 
-  if (!isLoaded || !isSignedIn) {
-    return null;
-  }
+  // Function to fetch profiles from API
+  useEffect(() => {
+    const fetchProfiles = async () => {
+      if (!isLoaded || !isSignedIn) return;
 
-  // Function to update search term
-  const handleSearchChange = (searchTerm: string) => {
-    setSearchTerm(searchTerm);
-  };
+      setIsLoading(true);
+      try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_GET_USERS_API_ENDPOINT}`); // Replace with your API Gateway URL
+        if (!response.ok) {
+          throw new Error(`Error: ${response.status}`);
+        }
+        const data = await response.json();
 
-  const handleOnlineStatusChange = (status: boolean | null, label: string) => {
-    setFilterOnlineStatus(status); // This sets the actual filter status (true for online, false for offline, null for all)
-    setCurrentStatus(label); // This changes the button label to reflect the current filter
-    setIsDropdownStatusOpen(false); // Close the dropdown after a selection is made
-  };
-  
-  // Filter function adjustment for search bar 
+        // Map API response to Profile interface
+        const mappedProfiles = data.map((user: any) => ({
+          name: `${user.first_name} ${user.last_name}`,
+          email: user.email,
+          role: user.role || "Intern",
+          imageUrl: user.imageUrl || "",
+          lastSeen: user.lastSeen || "",
+          lastSeenDateTime: user.lastSeenDateTime || "",
+          isOnline: user.isOnline || false,
+          interests: user.interests || [],
+          school: user.school || "",
+          major: user.major || "",
+          gender: user.gender || "",
+        }));
+        setProfiles(mappedProfiles);
+      } catch (error) {
+        console.error("Failed to fetch profiles:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchProfiles();
+  }, [isLoaded, isSignedIn]);
+
+  // Function to filter profiles based on search and selected filters
   const filteredProfiles = profiles.filter((profile) => {
     const lowerSearchTerm = searchTerm.toLowerCase();
-  
+
     const matchesOnlineStatus = filterOnlineStatus !== null ? profile.isOnline === filterOnlineStatus : true;
     const matchesInterests = selectedInterests.length > 0 ? selectedInterests.every((interest) => profile.interests.includes(interest)) : true;
     const matchesGender = filterGender ? profile.gender === filterGender : true;
-  
+
     const matchesSearchTerm =
       profile.name.toLowerCase().includes(lowerSearchTerm) ||
       profile.email.toLowerCase().includes(lowerSearchTerm) ||
       profile.role.toLowerCase().includes(lowerSearchTerm) ||
       profile.gender.toLowerCase().includes(lowerSearchTerm) ||
       (profile.major && profile.major.toLowerCase().includes(lowerSearchTerm)) ||
-      (profile.school && profile.school.toLowerCase().includes(lowerSearchTerm)) || // Add school filtering
+      (profile.school && profile.school.toLowerCase().includes(lowerSearchTerm)) ||
       profile.interests.some((interest) => interest.toLowerCase().includes(lowerSearchTerm));
-  
+
     return matchesOnlineStatus && matchesInterests && matchesGender && matchesSearchTerm;
   });
-    
+
+  if (!isLoaded || !isSignedIn) {
+    return null;
+  }
+  const handleOnlineStatusChange = (status: boolean | null, label: string) => {
+    setFilterOnlineStatus(status); // Sets the actual filter status
+    setCurrentStatus(label); // Updates the dropdown button text
+    setIsDropdownStatusOpen(false); // Closes the dropdown
+  };
+
   // UI for selecting interest
   const handleInterestChange = (event: React.ChangeEvent<HTMLInputElement>, interest: string) => {
     const checked = event.target.checked;
@@ -146,27 +291,36 @@ const Profiles: React.FC = () => {
     });
   };
 
-  const handleProfileClick = (profile: Profile) => {
-    setSelectedProfile(profile);
-    // You might also want to toggle the visibility of the modal here if it's not solely based on whether selectedProfile is null
-    setIsProfileModalOpen(true); // Assuming this is the modal state you mentioned
+  // Function to truncate text
+  const truncateText = (text: string) => {
+    // Adjust 1024 according to your 'lg' breakpoint
+    if (windowWidth <= 1024 && text.length > 3) {
+      return text.substring(0, 6) + '...';
+    }
+    return text;
   };
+  const toggleModal = () => {
+    setIsModalOpen(!isModalOpen);
 
+  };
   const handleGenderChange = (gender: string | null) => {
     setFilterGender(gender); // Set the selected gender filter
     setIsDropdownGenderOpen(false); // Close the dropdown
   };
-
-
 
   // Function to toggle the modal's
   const toggleProfileModal = () => {
     setIsProfileModalOpen(!isProfileModalOpen);
 
   }
-  const toggleModal = () => {
-    setIsModalOpen(!isModalOpen);
-
+  const handleProfileClick = (profile: Profile) => {
+    setSelectedProfile(profile);
+    // You might also want to toggle the visibility of the modal here if it's not solely based on whether selectedProfile is null
+    setIsProfileModalOpen(true); // Assuming this is the modal state you mentioned
+  };
+  // Function to update search term
+  const handleSearchChange = (searchTerm: string) => {
+    setSearchTerm(searchTerm);
   };
 
   return (
@@ -425,52 +579,73 @@ const Profiles: React.FC = () => {
               )}
 
               {/* Profile Cards */}
-              <ul role="list" className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-10 px-4 lg:px-0 z-0">
-                {filteredProfiles.map((profile, index) => (
+              <div className="px-4 py-8">
+                <ul
+                  role="list"
+                  className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 justify-items-center lg:justify-items-stretch"
+                >
+                  {filteredProfiles.map((profile, index) => (
+                    <li
+                      key={index}
+                      className="bg-white shadow-lg w-80 h-96 flex flex-col justify-between rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
+                    >
+                      <div className="flex flex-col items-center p-6 space-y-4">
+                        {/* Profile Image */}
+                        <div className="relative w-32 h-32 rounded-full overflow-hidden border-4 border-indigo-500 shadow-lg">
+                          <Image
+                            src={profile.imageUrl}
+                            alt={`${profile.name}'s profile`}
+                            layout="fill"
+                            objectFit="cover"
+                            className="hover:scale-110 transition-transform duration-300"
+                            onClick={() => handleProfileClick(profile)}
+                          />
+                        </div>
 
-                  <li key={index} className="bg-white shadow-xl shadow-black overflow-hidden rounded-lg sm:rounded-xl mx-auto w-[300px] h-[320px] sm:w-[200px] sm:h-[400px] md:w-[300px] lg:w-[300px] xl:w-[300px]">
-                    <div className="flex flex-col items-center p-4 space-y-4">
-                      {/* <div className="flex sm:flex-col items-start sm:items-center p-1 space-y-0 "> */}
+                        {/* Profile Details */}
+                        <div className="text-center space-y-2">
+                          <h3 className="text-lg font-semibold text-gray-800">{profile.name}</h3>
+                          <p className="text-gray-600 text-sm">{profile.email}</p>
+                          <p className="text-sm text-gray-700">
+                            Role: <span className="font-medium">{profile.role}</span>
+                          </p>
 
-                      <div className="relative w-32 h-32 sm:w-40 sm:h-40 rounded-md overflow-hidden">
-                        <Image
-                          layout="fill"
-                          objectFit="cover"
-                          src={profile.imageUrl}
-                          alt={profile.name}
-                          onClick={() => handleProfileClick(profile)}
-                          className="object-cover rounded-md hover:-translate-y-1 hover:scale-110 focus:outline-none transition ease-in-out delay-50  sm:rounded-xl duration-300 relative square mr-3 overflow-hidden cursor-pointer"
-                        />
+                          {/* Roomie Ready Status */}
+                          <p
+                            className={`text-sm font-medium ${profile.isOnline ? 'text-purple-600' : 'text-gray-300'
+                              }`}
+                          >
+                            {profile.isOnline ? 'Roomie Ready' : 'Not Roomie Ready'}
+                          </p>
+                        </div>
                       </div>
 
-                      <div className="space-y-0.5 sm:text-sm text-center">
-                        <p className="text-xl font-medium leading-6 text-black">
-                          {profile.name}
-                        </p>
-                        <p className="hidden sm:block text-md leading-5 text-gray-600">{profile.email}</p>
-                        <p className="mt-2 text-sm leading-6 text-gray-900">{profile.role}</p>
-                        <p className="hidden sm:block text-sm leading-5 text-gray-400">active: 4h ago</p>
-                        <p className={`text-sm font-semibold leading-6 ${profile.isOnline ? 'text-indigo-600' : 'text-gray-300'}`}>
-                          {profile.isOnline && <span className="online-indicator"></span>}
-                          {" "}
-                          {profile.isOnline ? "Roomie Ready" : "Roomie Ready"}
-                        </p>
+                      {/* Actions Section */}
+                      <div className="flex border-t border-gray-200">
+                        <a
+                          href={`mailto:${profile.email}`}
+                          className="flex-1 py-3 text-center text-indigo-600 font-medium hover:bg-indigo-50 transition duration-300 text-sm"
+                        >
+                          Email
+                        </a>
+                        <div className="border-l border-gray-200"></div>
+                        <button
+                          onClick={() => alert(`Messaging ${profile.name}`)} // Replace with your messaging logic
+                          className="flex-1 py-3 text-center text-indigo-600 font-medium hover:bg-indigo-50 transition duration-300 text-sm"
+                        >
+                          Message
+                        </button>
                       </div>
-                    </div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
 
-                    <div className="flex  border-t-2 border-gray-100 w-full text-center">
-                      <a href={`mailto:${profile.email}`} className="flex-1 py-6 sm:py-6 text-md font-medium text-gray-600 hover:bg-gray-100 hover:-translate-y-1 hover:scale-110 focus:outline-none transition ease-in-out delay-50 rounded-xl duration-300">
-                        Email
-                      </a>
-                      <div className="border-l-2 border-gray-100"></div>
-                      <button className="flex-1 py-6 sm:py-4 text-md font-medium text-gray-600 hover:bg-gray-100 hover:-translate-y-1 hover:scale-110 focus:outline-none transition ease-in-out delay-50 rounded-xl duration-300">
-                        Message
-                      </button>
-                    </div>
 
-                  </li>
-                ))}
-              </ul>
+
+
+
+
 
             </div>
             <SocialRightSideComp onSearchChange={handleSearchChange} />

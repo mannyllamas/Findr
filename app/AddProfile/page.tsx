@@ -168,28 +168,78 @@ export default function AddProfile() {
 
     //     setTimeout(() => setSubmissionMessage(''), 5000);
     // };
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
+    // const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
+    //     event.preventDefault();
+    //     const profiles = JSON.parse(localStorage.getItem('profiles') || '[]');
+    //     const profileIndex = profiles.findIndex((p: Profile) => p.email === newProfile.email);
+
+    //     const profileToSave = { ...newProfile, backgroundImageUrl }; // Explicitly set backgroundImageUrl
+
+    //     if (profileIndex !== -1) {
+    //         // Profile exists - Update the existing profile
+    //         profiles[profileIndex] = profileToSave;
+    //         setSubmissionMessageType('success');
+    //         setSubmissionMessage('Profile updated successfully!');
+    //     } else {
+    //         // New profile - Add it
+    //         profiles.push(profileToSave);
+    //         setSubmissionMessageType('success');
+    //         setSubmissionMessage('Profile added successfully!');
+    //     }
+
+    //     localStorage.setItem('profiles', JSON.stringify(profiles));
+    //     setTimeout(() => setSubmissionMessage(''), 5000);
+    // };
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
         event.preventDefault();
-        const profiles = JSON.parse(localStorage.getItem('profiles') || '[]');
-        const profileIndex = profiles.findIndex((p: Profile) => p.email === newProfile.email);
-
-        const profileToSave = { ...newProfile, backgroundImageUrl }; // Explicitly set backgroundImageUrl
-
-        if (profileIndex !== -1) {
-            // Profile exists - Update the existing profile
-            profiles[profileIndex] = profileToSave;
-            setSubmissionMessageType('success');
-            setSubmissionMessage('Profile updated successfully!');
-        } else {
-            // New profile - Add it
-            profiles.push(profileToSave);
-            setSubmissionMessageType('success');
-            setSubmissionMessage('Profile added successfully!');
+    
+        // Map front-end profile to match the backend structure
+        const profileToSave = {
+            id: newProfile.userId,
+            first_name: newProfile.name.split(' ')[0] || '',
+            last_name: newProfile.name.split(' ')[1] || '',
+            email: newProfile.email,
+            role: newProfile.role,
+            imageUrl: newProfile.imageUrl,
+            lastSeen: newProfile.lastSeen,
+            lastSeenDateTime: newProfile.lastSeenDateTime,
+            isOnline: newProfile.isOnline,
+            interests: newProfile.interests,
+            school: newProfile.school,
+            major: newProfile.major,
+            gender: newProfile.gender,
+        };
+    
+        try {
+            // Make POST request to your backend
+            const response = await fetch(`${process.env.NEXT_PUBLIC_ADD_USER_API_ENDPOINT}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(profileToSave),
+            });
+    
+            if (response.ok) {
+                const result = await response.json();
+                setSubmissionMessageType('success');
+                setSubmissionMessage('Profile created successfully!');
+                console.log('Backend response:', result);
+            } else {
+                const errorData = await response.json();
+                setSubmissionMessageType('error');
+                setSubmissionMessage(`Error creating profile: ${errorData.message}`);
+                console.error('Error response from backend:', errorData);
+            }
+        } catch (error) {
+            setSubmissionMessageType('error');
+            setSubmissionMessage('An unexpected error occurred');
+            console.error('Error making API call:', error);
         }
-
-        localStorage.setItem('profiles', JSON.stringify(profiles));
+    
         setTimeout(() => setSubmissionMessage(''), 5000);
     };
+    
 
     const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>, type: 'profile' | 'background') => {
         if (e.target.files && e.target.files[0]) {

@@ -12,7 +12,15 @@ export default {
       },
       {
         protocol: 'https',
-        hostname: 'img.clerk.com', // Add this Clerk domain
+        hostname: 'img.clerk.com', // Existing Clerk domain
+      },
+      {
+        protocol: 'https',
+        hostname: 'www.gravatar.com', // Add Gravatar domain
+      },
+      {
+        protocol: 'https',
+        hostname: 'example.com', // Add example.com domain
       },
     ],
   },
