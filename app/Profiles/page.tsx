@@ -624,7 +624,7 @@ const Profiles: React.FC = () => {
                       <div className="flex border-t border-gray-200">
                         <a
                           href={`mailto:${profile.email}`}
-                          className="flex-1 py-3 text-center text-indigo-600 font-medium hover:bg-indigo-50 transition duration-300 text-sm"
+                          className="flex-1 py-7 text-center text-indigo-600 font-medium hover:bg-indigo-50 transition duration-300 text-sm"
                         >
                           Email
                         </a>

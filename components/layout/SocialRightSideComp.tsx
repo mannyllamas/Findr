@@ -155,14 +155,14 @@ export default function SocialRightSideComp({ onSearchChange }: SocialRightSideC
           <p className="text-light-1 font-bold">Manage Account</p>
         </div>
         {/* Modal toggle button */}
-        <div className="flex justify-center mt-4 ">
+        {/* <div className="flex justify-center mt-4 ">
           <button
             onClick={toggleEditProfileModal}
             className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 transition duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
           >
             Confirm or Edit Profile
           </button>
-        </div>
+        </div> */}
         {/* Profile Edit Modal */}
         <EditProfileModal isOpen={isEditProfileModalOpen} onClose={toggleEditProfileModal} />
       </div>
